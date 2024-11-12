@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Poèmes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f3f4f6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #4a5568;
+        }
+
+        #poem-container {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .poem-title {
+            font-size: 25px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .poem-dedication {
+            font-size: 25px;
+            font-style: italic;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .poem-text {
+            font-size: 20px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .nav-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            background-color: #4a5568;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #2d3748;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mes Poèmes</h1>
+        <div id="poem-container">
+            <div class="poem-title" id="poem-title"></div>
+            <div class="poem-dedication" id="poem-dedication"></div>
+            <div class="poem-text" id="poem-text"></div>
+        </div>
+        <div class="nav-buttons">
+            <button class="button" onclick="previousPoem()">Précédent</button>
+            <button class="button" onclick="nextPoem()">Suivant</button>
+        </div>
+    </div>
+
+    <script>
+        // Liste des poèmes avec titre en gras, dédicace en italique, et texte formaté
+        const poems = [
+            {
+                title: "Màs que todo",
+                dedication: "Pour Elle",
+                text: `Me gusta respirar, contemplar la naturaleza,
+Me gusta escucharte, pero sobre todo...
+Te amo, tu dulce voz, tu noble belleza,
+Tú eres el que me hace sentir completo.
+
+Me salvaste la vida, me sacaste del abismo,
+La tristeza, el dolor, la ira y el pesar,
+Todo esto me desgarraba, me dejaba sin ritmo.
+Así que gracias por estar conmigo
+
+Sin ti no viviría, pero es demasiado tarde,
+Has encontrado lo que te faltaba,
+y perdí lo que tanto necesitaba,
+Entonces, aunque triste, me alegro de verte.`
+            },
+            {
+                title: "Dernier arrêt",
+                dedication: "Pour Romane",
+                text: `Rien ne m'arrêtera 
+Je vivrai la vie que je veux 
+Plus jamais la douleur ne m'empêchera 
+Parce que je le peux
+
+Ne t'en fait pas
+mon cœur me guidera 
+Vers celle qui m'aimeras
+Même si ça ne elle sera pas 
+
+celle que j'aimais
+Je ne mourrai pas
+Le nouveau départ me fait peur
+Mais tu auras toujours ta place dans mon coeur`
+            },
+            {
+                title: "Merci",
+                dedication: "Pour mes amis, AKctUs, Léo, Lefrramite, Sophian et Miguel",
+                text: `Merci de m'avoir soutenu
+Le temps est venu pour moi,
+de vivre la vie que j'aurais voulu 
+Même si c'est sans toi
+
+Jamais je ne vous oublierai 
+La chance que j'ai eue
+D'avoir de tels gens dans ma vie
+Heureux de vous avoir connus
+Des souvenirs pour me consoler 
+Quand j'y pense, je souris`
+            },
+
+            {
+                title: "Toxique",
+                dedication: "Pour Romane",
+                text: `Excuse moi, je pourrais pas être là
+Ne m'en veux pas, c'est mon choix
+Laisse moi tomber, je ne mérite pas
+que tu m'aide, moi
+
+Je suis toxique
+je blesse les gens 
+A petit feu je me tue 
+et je leur ments
+
+Enfuis toi, évite les pleurs
+avant de me voir, mort
+Devant mon corps,
+je ne mérite pas de fleurs
+
+Ma vie est un désastre
+Laisse moi rejoindre les astres
+Laisse moi mourir
+Pour ne plus soufrir
+`
+            },
+
+            {
+                title: "Nightmare",
+                dedication: "Pour Gaétan",
+                text: `Times are tough
+Sleep no longer comes to me
+My nightmares haunt me rough
+And won’t let me be
+
+No joy left to find
+It's been far too long
+Alone I started my grind
+Alone I’ll die, strong
+
+Set me free from here
+Through love or through death
+But drive away this fear
+That steals every of my breath
+`
+            },
+
+            {
+                title: "Brûlé de l'intérieur",
+                dedication: "Pour Elle",
+                text: `Je la vois dans mon coeur 
+La flamme de l'espoir 
+Celle qui fait souffrir les meilleurs 
+Je ne peux que l'entrévoir 
+
+Un avenir meilleur 
+Accompagné de celle que j'aime
+Ça sera mon dernière rêve 
+Celui qui me fait le plus peur
+
+Alors rends le possible 
+Douce âme sœur 
+Rends moi meilleur
+Pour éviter m'éviter une fin terrible 
+`
+            },
+
+            {
+                title: "Trop tard",
+                dedication: "Pour Elina",
+                text: `Je t'aurais aimé 
+Mais j'ai tout foiré 
+Mes plus belles années
+Sont passées
+
+Alors promet moi d'être heureuse 
+De vivre la vie que tu veux
+De ne pas te laisser arrêter 
+Par une soirée d'été  
+`
+            },
+            // Ajoutez les autres poèmes ici
+        ];
+
+        let currentPoemIndex = 0;
+
+        function displayPoem() {
+            const poem = poems[currentPoemIndex];
+            document.getElementById("poem-dedication").textContent = poem.dedication;
+            document.getElementById("poem-title").textContent = poem.title;
+            document.getElementById("poem-text").textContent = poem.text;
+        }
+
+        function previousPoem() {
+            if (currentPoemIndex > 0) {
+                currentPoemIndex--;
+                displayPoem();
+            }
+        }
+
+        function nextPoem() {
+            if (currentPoemIndex < poems.length - 1) {
+                currentPoemIndex++;
+                displayPoem();
+            }
+        }
+
+        displayPoem();
+    </script>
+</body>
+</html>
